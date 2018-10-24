@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    password: ${DATABASE_PASSWORD:Aa123456}
+    url: ${DATABASE_URL:jdbc:mysql://localhost:3306/cities}
+    username: ${DATABASE_USERNAME:cities}
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+  liquibase:
+    change-log: classpath:liquibase/db.changelog-master.xml
+    enabled: true
+  thymeleaf:
+      cache: false
