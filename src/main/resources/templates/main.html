@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--/*@thymesVar id="pairs" type="java.util.List<com.example.sms.dto.PairDto>"*/-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Pairs with common interests</title>
+    <link rel="stylesheet" th:href="@{/css/site.css}"/>
+    <script th:src="@{/js/jquery.min.js}"></script>
+</head>
+<body>
+<div class="send-form">
+    <h4>Upload file with user's interests</h4>
+    <form autocomplete="off" action="/" method="post" enctype="multipart/form-data">
+        <input name="file" placeholder="Choose JSON file" type="file" accept="*.json"/>
+        <button type="submit">Save</button>
+    </form>
+</div>
+<div class="results" th:if="${pairs!=null && #arrays.isEmpty(pairs)}"></div>
+<div>
+    <script th:src="@{/js/site.js}"></script>
+</div>
+</body>
+</html>
