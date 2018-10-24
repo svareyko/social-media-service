@@ -1,32 +1,34 @@
-[
-  {
-    "name": "Jane",
-    "interests": [
-      "movies",
-      "music"
-    ]
-  },
-  {
-    "name": "Peter",
-    "interests": [
-      "cars",
-      "movies"
-    ]
-  },
-  {
-    "name": "Dustin",
-    "interests": [
-      "movies",
-      "cars",
-      "hiking",
-      "music"
-    ]
-  },
-  {
-    "name": "Lana",
-    "interests": [
-      "cars",
-      "dancing"
-    ]
-  }
-]
+{
+  "list": [
+    {
+      "name": "Jane",
+      "interests": [
+        "movies",
+        "music"
+      ]
+    },
+    {
+      "name": "Peter",
+      "interests": [
+        "cars",
+        "movies"
+      ]
+    },
+    {
+      "name": "Dustin",
+      "interests": [
+        "movies",
+        "cars",
+        "hiking",
+        "music"
+      ]
+    },
+    {
+      "name": "Lana",
+      "interests": [
+        "cars",
+        "dancing"
+      ]
+    }
+  ]
+}
