@@ -45,6 +45,6 @@ public class PairDto implements Comparable<PairDto> {
      * @return list of common interests
      */
     private String getInterestsString() {
-        return self.getInterests().stream().collect(Collectors.joining(JOIN_DELIMITER));
+        return this.interests.stream().collect(Collectors.joining(JOIN_DELIMITER));
     }
 }
