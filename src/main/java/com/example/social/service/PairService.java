@@ -6,6 +6,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 /**
+ * Pair lookup service, search pairs in provided JSON file.
+ *
  * @author s.vareyko
  * @since 24.10.2018
  */

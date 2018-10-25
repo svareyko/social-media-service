@@ -18,7 +18,8 @@ public class PairEntryDto implements Comparable<PairEntryDto> {
     private Set<PairDto> pairs;
 
     /**
-     * Special comparator, that not remove any elements.
+     * Special comparator, that never return 'equal',
+     * so in {@link java.util.Set} collections element will not be removed.
      * <p>
      * {@inheritDoc}
      */

@@ -10,6 +10,8 @@ import javax.annotation.PostConstruct;
 import java.io.IOException;
 
 /**
+ * Implementation of JSON parsing service.
+ *
  * @author s.vareyko
  * @since 24.10.2018
  */
@@ -23,13 +25,6 @@ public class JsonParserServiceImpl implements JsonParserService {
         mapper = new ObjectMapper();
     }
 
-    /**
-     * Method that convert provided file into DTO.
-     *
-     * @param file for conversion
-     * @param cls  class of target object
-     * @return initialized with values from file object
-     */
     @Override
     public <T> T parse(final MultipartFile file, final Class<T> cls) {
         try {

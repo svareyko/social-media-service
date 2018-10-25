@@ -17,6 +17,11 @@ public class UserDto {
     private String name;
     private List<String> interests;
 
+    /**
+     * Special flags.
+     */
+    private boolean excluded = false;
+
     @Override
     public String toString() {
         return this.name;

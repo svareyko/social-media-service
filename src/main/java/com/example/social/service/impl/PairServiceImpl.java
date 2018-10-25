@@ -20,6 +20,8 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 /**
+ * Implementation of pair lookup service.
+ *
  * @author s.vareyko
  * @since 24.10.2018
  */
@@ -72,6 +74,7 @@ public class PairServiceImpl implements PairService {
             }
         }
         // sort result map values based on comparator
+        // at start will be placed users which have less pairs and pairs will be found for them at first
         return pairs.entrySet().stream().map(entry -> new PairEntryDto(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toCollection(TreeSet::new));
     }
@@ -79,25 +82,23 @@ public class PairServiceImpl implements PairService {
     /**
      * Helper method that iterate all users and looks for best matching pairs.
      *
-     * @param pairsByUser map of pairs by users
+     * @param pairEntries set of pairs by users
      * @return list of found pairs
      */
-    private List<PairDto> collectPairsByCommonInterests(final Set<PairEntryDto> pairsByUser) {
-        final List<UserDto> paired = new ArrayList<>();
+    private List<PairDto> collectPairsByCommonInterests(final Set<PairEntryDto> pairEntries) {
         final List<PairDto> result = new ArrayList<>();
 
-        pairsByUser.forEach(entry -> {
-            if (paired.contains(entry.getUser())) return;
+        pairEntries.forEach(entry -> {
+            if (entry.getUser().isExcluded()) return;
             final Set<PairDto> pairs = entry.getPairs();
-            final PairDto pair = pairs.stream()
-                    .filter(variant -> !paired.contains(variant.getPartner()))
-                    .findFirst().orElse(null);
+            final PairDto pair = pairs.stream().filter(PairDto::isPartnerNotExcluded).findFirst().orElse(null);
             if (Objects.nonNull(pair)) {
                 result.add(pair);
-                paired.add(entry.getUser());
-                paired.add(pair.getPartner());
+                entry.getUser().setExcluded(true);
+                pair.getPartner().setExcluded(true);
             }
         });
+
         return result;
     }
 }

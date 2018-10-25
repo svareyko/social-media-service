@@ -22,6 +22,15 @@ public class PairDto implements Comparable<PairDto> {
     private Integer interestsNum;
     private List<String> interests;
 
+    /**
+     * Getter for partner's excluded field.
+     *
+     * @return true if partner still not excluded
+     */
+    public boolean isPartnerNotExcluded() {
+        return !this.partner.isExcluded();
+    }
+
     @Override
     public String toString() {
         return String.format("%s-%s[%s]", this.self, this.partner, this.getInterestsString());
@@ -40,7 +49,7 @@ public class PairDto implements Comparable<PairDto> {
     }
 
     /**
-     * Special method that obtain list of interests that both of them contains.
+     * Special method that obtain and join list of interests that both of them contains.
      *
      * @return list of common interests
      */

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class AdviceController {
 
     /**
-     * Handle exceptions from database that generated when username already registered.
+     * Handle exceptions thrown by JSON parser.
      *
      * @param exception thrown exception
      * @return error message written to the body
