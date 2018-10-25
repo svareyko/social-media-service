@@ -1,7 +1,7 @@
-package com.example.sms.controller;
+package com.example.social.controller;
 
-import com.example.sms.dto.PairDto;
-import com.example.sms.service.PairService;
+import com.example.social.dto.PairDto;
+import com.example.social.service.PairService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -13,9 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-import static com.example.sms.constant.ApplicationConstants.ATTR_PAIRS;
-import static com.example.sms.constant.ApplicationConstants.URL_ROOT;
-import static com.example.sms.constant.ApplicationConstants.VIEW_MAIN;
+import static com.example.social.constant.ApplicationConstants.ATTR_PAIRS;
+import static com.example.social.constant.ApplicationConstants.URL_ROOT;
+import static com.example.social.constant.ApplicationConstants.VIEW_MAIN;
 
 /**
  * @author s.vareyko

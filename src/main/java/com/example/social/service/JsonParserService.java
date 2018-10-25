@@ -1,4 +1,4 @@
-package com.example.sms.service;
+package com.example.social.service;
 
 import org.springframework.web.multipart.MultipartFile;
 

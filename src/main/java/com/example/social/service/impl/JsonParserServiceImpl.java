@@ -1,6 +1,6 @@
-package com.example.sms.service.impl;
+package com.example.social.service.impl;
 
-import com.example.sms.service.JsonParserService;
+import com.example.social.service.JsonParserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

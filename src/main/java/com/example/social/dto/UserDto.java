@@ -1,4 +1,4 @@
-package com.example.sms.dto;
+package com.example.social.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,4 +16,9 @@ import java.util.List;
 public class UserDto {
     private String name;
     private List<String> interests;
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

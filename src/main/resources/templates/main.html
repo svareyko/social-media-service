@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<!--/*@thymesVar id="pairs" type="java.util.List<com.example.sms.dto.PairDto>"*/-->
+<!--/*@thymesVar id="pairs" type="java.util.List<com.example.social.dto.PairDto>"*/-->
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Pairs with common interests</title>
@@ -12,10 +12,13 @@
     <h4>Upload file with user's interests</h4>
     <form autocomplete="off" action="/" method="post" enctype="multipart/form-data">
         <input name="file" placeholder="Choose JSON file" type="file" accept="*.json"/>
-        <button type="submit">Save</button>
+        <button type="submit">Send</button>
     </form>
 </div>
-<div class="results" th:if="${pairs!=null && #arrays.isEmpty(pairs)}"></div>
+<div class="results" th:if="${pairs!=null&&!#arrays.isEmpty(pairs)}">
+    <h4>Found pairs</h4>
+    <p th:each="pair:${pairs}" th:text="${pair}"></p>
+</div>
 <div>
     <script th:src="@{/js/site.js}"></script>
 </div>

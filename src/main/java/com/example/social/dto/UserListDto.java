@@ -1,4 +1,4 @@
-package com.example.sms.dto;
+package com.example.social.dto;
 
 import lombok.Getter;
 import lombok.Setter;

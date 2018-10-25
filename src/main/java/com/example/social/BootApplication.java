@@ -1,4 +1,4 @@
-package com.example.sms;
+package com.example.social;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;

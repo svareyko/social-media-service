@@ -1,6 +1,6 @@
-package com.example.sms.service;
+package com.example.social.service;
 
-import com.example.sms.dto.PairDto;
+import com.example.social.dto.PairDto;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
