@@ -10,8 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ApplicationConstants {
 
-    public final static String ATTR_PAIRS = "pairs";
     public final static String URL_ROOT = "/";
-    public final static String VIEW_MAIN = "main";
+    public final static String URL_UPLOAD = "/upload";
     public final static String JOIN_DELIMITER = ",";
 }

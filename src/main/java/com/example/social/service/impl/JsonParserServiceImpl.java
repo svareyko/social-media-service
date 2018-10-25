@@ -1,5 +1,6 @@
 package com.example.social.service.impl;
 
+import com.example.social.exception.JsonParseException;
 import com.example.social.service.JsonParserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,7 @@ public class JsonParserServiceImpl implements JsonParserService {
         try {
             return mapper.readValue(file.getInputStream(), cls);
         } catch (final IOException exception) {
-            throw new RuntimeException(exception);
+            throw new JsonParseException(exception);
         }
     }
 }
