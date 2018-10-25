@@ -16,7 +16,7 @@ import static com.example.social.constant.ApplicationConstants.JOIN_DELIMITER;
 @Getter
 @Setter
 @AllArgsConstructor
-public class PairDto implements Comparable {
+public class PairDto implements Comparable<PairDto> {
     private UserDto self;
     private UserDto partner;
     private Integer interestsNum;
@@ -34,8 +34,7 @@ public class PairDto implements Comparable {
      * {@inheritDoc}
      */
     @Override
-    public int compareTo(final Object obj) {
-        final PairDto another = (PairDto) obj;
+    public int compareTo(final PairDto another) {
         final int result = another.getInterestsNum().compareTo(this.getInterestsNum());
         return result == 0 ? 1 : result;
     }

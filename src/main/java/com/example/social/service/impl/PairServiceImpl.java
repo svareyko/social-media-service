@@ -1,6 +1,7 @@
 package com.example.social.service.impl;
 
 import com.example.social.dto.PairDto;
+import com.example.social.dto.PairEntryDto;
 import com.example.social.dto.UserDto;
 import com.example.social.dto.UserListDto;
 import com.example.social.service.JsonParserService;
@@ -33,22 +34,24 @@ public class PairServiceImpl implements PairService {
         final UserListDto parsed = jsonService.parse(file, UserListDto.class);
         // as we work only with one instance of UserDto we don't need hashcode & equals
         final List<UserDto> users = parsed.getList();
-        final Map<UserDto, Set<PairDto>> pairsByUser = collectPairsByUser(users);
-        return collectPairsByCommonInterests(users, pairsByUser);
+        final Set<PairEntryDto> pairsByUser = collectPairsByUser(users);
+        return collectPairsByCommonInterests(pairsByUser);
     }
 
     /**
      * Helper method that collect list of pairs for each user.
-     * Additionally pairs sorted by number of common interests (used sorting in {@link TreeSet}).
+     * Pairs sorted by number of common interests (used sorting in {@link TreeSet}).
+     * Pair entries sorted by number of pairs for user.
      *
      * @param users list of users with their interests
      * @return mapped interests by user dto
      * @see java.util.TreeSet
      */
-    private Map<UserDto, Set<PairDto>> collectPairsByUser(final List<UserDto> users) {
-        final Map<UserDto, Set<PairDto>> result = new HashMap<>();
-        // initialize array with tree sets
-        users.forEach(user -> result.put(user, new TreeSet<PairDto>()));
+    private Set<PairEntryDto> collectPairsByUser(final List<UserDto> users) {
+        // create map for fast access collections
+        final Map<UserDto, Set<PairDto>> pairs = new HashMap<>();
+        // initialize collections with tree sets
+        users.forEach(user -> pairs.put(user, new TreeSet<>()));
 
         // iterate over all users and collect all possible pairs
         for (int i = 0; i < users.size(); i++) {
@@ -63,37 +66,36 @@ public class PairServiceImpl implements PairService {
                 final int size = common.size();
                 // add only if there is common interests
                 if (size > 0) {
-                    result.get(first).add(new PairDto(first, second, size, common));
-                    result.get(second).add(new PairDto(second, first, size, common));
+                    pairs.get(first).add(new PairDto(first, second, size, common));
+                    pairs.get(second).add(new PairDto(second, first, size, common));
                 }
             }
         }
-        return result;
+        // sort result map values based on comparator
+        return pairs.entrySet().stream().map(entry -> new PairEntryDto(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toCollection(TreeSet::new));
     }
 
     /**
      * Helper method that iterate all users and looks for best matching pairs.
      *
-     * @param users       list of users with their interests
      * @param pairsByUser map of pairs by users
      * @return list of found pairs
      */
-    private List<PairDto> collectPairsByCommonInterests(final List<UserDto> users,
-                                                        final Map<UserDto, Set<PairDto>> pairsByUser) {
+    private List<PairDto> collectPairsByCommonInterests(final Set<PairEntryDto> pairsByUser) {
         final List<UserDto> paired = new ArrayList<>();
         final List<PairDto> result = new ArrayList<>();
-        users.forEach(user -> {
-            if (paired.contains(user)) return;
-            final Set<PairDto> pairs = pairsByUser.get(user);
+
+        pairsByUser.forEach(entry -> {
+            if (paired.contains(entry.getUser())) return;
+            final Set<PairDto> pairs = entry.getPairs();
             final PairDto pair = pairs.stream()
                     .filter(variant -> !paired.contains(variant.getPartner()))
                     .findFirst().orElse(null);
             if (Objects.nonNull(pair)) {
                 result.add(pair);
-                paired.add(pair.getSelf());
+                paired.add(entry.getUser());
                 paired.add(pair.getPartner());
-                pairsByUser.remove(pair.getSelf());
-                pairsByUser.remove(pair.getPartner());
             }
         });
         return result;
