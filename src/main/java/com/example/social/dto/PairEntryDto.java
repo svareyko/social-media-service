@@ -1,5 +1,6 @@
 package com.example.social.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,6 +17,16 @@ import java.util.Set;
 public class PairEntryDto implements Comparable<PairEntryDto> {
     private UserDto user;
     private Set<PairDto> pairs;
+
+    /**
+     * Getter for user's excluded field.
+     *
+     * @return true if user still not excluded
+     */
+    @JsonIgnore
+    public boolean isUserNotExcluded() {
+        return !this.user.isExcluded();
+    }
 
     /**
      * Special comparator, that never return 'equal',

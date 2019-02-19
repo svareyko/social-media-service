@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ControllerAdvice
 public class AdviceController {
 
+    // todo: move such messages to internationalization
+    final static String JSON_EXCEPTION_MESSAGE = "Occurred exception during provided JSON file parsing: ";
+
     /**
      * Handle exceptions thrown by JSON parser.
      *
@@ -21,7 +24,6 @@ public class AdviceController {
     @ExceptionHandler(value = JsonParseException.class)
     @ResponseBody
     public String jsonParseExceptionHandler(final JsonParseException exception) {
-        // todo: move such messages to internationalization
-        return "Occurred exception during provided JSON file parsing: " + exception.getLocalizedMessage();
+        return JSON_EXCEPTION_MESSAGE + exception.getLocalizedMessage();
     }
 }

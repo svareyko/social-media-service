@@ -1,5 +1,6 @@
 package com.example.social.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,6 +28,7 @@ public class PairDto implements Comparable<PairDto> {
      *
      * @return true if partner still not excluded
      */
+    @JsonIgnore
     public boolean isPartnerNotExcluded() {
         return !this.partner.isExcluded();
     }

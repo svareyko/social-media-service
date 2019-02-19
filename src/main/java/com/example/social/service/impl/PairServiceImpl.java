@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -57,19 +56,19 @@ public class PairServiceImpl implements PairService {
 
         // iterate over all users and collect all possible pairs
         for (int i = 0; i < users.size(); i++) {
-            final UserDto first = users.get(i);
+            final UserDto user = users.get(i);
 
             // decrease number of iterations by excluding already checked pairs
             for (int j = i + 1; j < users.size(); j++) {
-                final UserDto second = users.get(j);
-                final List<String> intSecond = second.getInterests();
-                final List<String> common = first.getInterests().stream()
-                        .filter(intSecond::contains).collect(Collectors.toList());
+                final UserDto partner = users.get(j);
+                final List<String> partnersInterests = partner.getInterests();
+                final List<String> common = user.getInterests().stream()
+                        .filter(partnersInterests::contains).collect(Collectors.toList());
                 final int size = common.size();
                 // add only if there is common interests
                 if (size > 0) {
-                    pairs.get(first).add(new PairDto(first, second, size, common));
-                    pairs.get(second).add(new PairDto(second, first, size, common));
+                    pairs.get(user).add(new PairDto(user, partner, size, common));
+                    pairs.get(partner).add(new PairDto(partner, user, size, common));
                 }
             }
         }
@@ -88,16 +87,16 @@ public class PairServiceImpl implements PairService {
     private List<PairDto> collectPairsByCommonInterests(final Set<PairEntryDto> pairEntries) {
         final List<PairDto> result = new ArrayList<>();
 
-        pairEntries.forEach(entry -> {
-            if (entry.getUser().isExcluded()) return;
-            final Set<PairDto> pairs = entry.getPairs();
-            final PairDto pair = pairs.stream().filter(PairDto::isPartnerNotExcluded).findFirst().orElse(null);
-            if (Objects.nonNull(pair)) {
-                result.add(pair);
-                entry.getUser().setExcluded(true);
-                pair.getPartner().setExcluded(true);
-            }
-        });
+        pairEntries.stream()
+                .filter(PairEntryDto::isUserNotExcluded)
+                .map(PairEntryDto::getPairs)
+                .forEachOrdered(pairs -> pairs.stream()
+                        .filter(PairDto::isPartnerNotExcluded).findFirst()
+                        .ifPresent(pair -> {
+                            result.add(pair);
+                            pair.getSelf().setExcluded(true);
+                            pair.getPartner().setExcluded(true);
+                        }));
 
         return result;
     }
